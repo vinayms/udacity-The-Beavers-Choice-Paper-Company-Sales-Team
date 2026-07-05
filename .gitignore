@@ -4,3 +4,5 @@ __pycache__/
 .DS_Store
 *.log
 *.db
+PROJECT_INSTRUCTIONS.md
+PROJECT_RUBRIC.md
