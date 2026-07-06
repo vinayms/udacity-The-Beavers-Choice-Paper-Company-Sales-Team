@@ -48,9 +48,9 @@ The multi-agent system successfully processed all 20 sorted chronological reques
 
 | Metric | Initial State | Final State (After 20 Requests) | Net Change |
 | :--- | :--- | :--- | :--- |
-| **Cash Balance** | \$45,059.70 | \$47,966.35 | **+\$2,906.65** |
-| **Inventory Value** | \$4,940.30 | \$4,913.15 | **-\$27.15** |
-| **Total Net Assets** | \$50,000.00 | \$52,879.50 | **+\$2,879.50 (Profit)** |
+| **Cash Balance** | \$45,059.70 | \$52,372.63 | **+\$7,312.93** |
+| **Inventory Value** | \$4,940.30 | \$4,920.75 | **-\$19.55** |
+| **Total Net Assets** | \$50,000.00 | \$57,293.38 | **+\$7,293.38 (Profit)** |
 
 ### Key Highlights:
 * **Fulfillment Metrics**: Out of the 20 incoming inquiries, 17 orders/quotes were successfully priced and finalized (e.g. Request 1, 5, 6, 7, 8, 9, 13, 14, 16, 17, 18, 19).

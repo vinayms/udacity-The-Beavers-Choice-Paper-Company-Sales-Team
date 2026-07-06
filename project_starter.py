@@ -647,7 +647,7 @@ sales_agent = Agent(
         "CRITICAL: When recording transactions (sales or stock orders) in the database, ALWAYS use the request date "
         "(provided in the query context) as the transaction date. DO NOT use the customer's delivery deadline date "
         "as the transaction date.\n"
-        "Provide clear confirmation outputs to the customer detailing total items, order date, delivery dates, and success status."
+        "Provide clear confirmation outputs to the customer detailing total items, order date, delivery dates, and success status. Do not include internal SQLite IDs or transaction IDs in your outputs to the customer."
     )
 )
 
@@ -665,7 +665,7 @@ orchestrator_agent = Agent(
         "2. Consult the Quoting Agent to compute the final price with bulk discount calculations.\n"
         "3. If inventory is sufficient, consult the Sales Agent to finalize the transaction.\n"
         "4. If inventory is insufficient, explain to the customer that the order is backordered and cannot be completed immediately.\n"
-        "Provide a transparent, helpful, and professional output summarizing the results. Do not output internal SQLite IDs or profit margins."
+        "Provide a transparent, helpful, and professional output summarizing the results. Under no circumstances should you ever output internal SQLite IDs, transaction IDs (such as Tx ID), or profit margins to the customer."
     )
 )
 
@@ -722,7 +722,7 @@ def tool_reorder_supply(ctx: RunContext[None], item_name: str, quantity: int, un
     total_cost = quantity * unit_price
     # Record stock purchase transaction
     tx_id = create_transaction(item_name, "stock_orders", quantity, total_cost, date)
-    return f"Restocked '{item_name}' with {quantity} units at a cost of ${total_cost:.2f} (Tx ID: {tx_id})."
+    return f"Restocked '{item_name}' with {quantity} units at a cost of ${total_cost:.2f}."
 
 # --- Quoting Agent Tool Definitions ---
 @quoting_agent.tool
@@ -747,7 +747,7 @@ def tool_get_cash_balance(ctx: RunContext[None], date: str) -> float:
 def tool_record_sale(ctx: RunContext[None], item_name: str, quantity: int, price: float, date: str) -> str:
     """Record a sales transaction in the database, increasing cash and reducing stock."""
     tx_id = create_transaction(item_name, "sales", quantity, price, date)
-    return f"Successfully recorded sale of {quantity} units of '{item_name}' for ${price:.2f} (Tx ID: {tx_id})."
+    return f"Successfully recorded sale of {quantity} units of '{item_name}' for ${price:.2f}."
 
 @sales_agent.tool
 def tool_generate_financial_report(ctx: RunContext[None], date: str) -> str:
@@ -793,7 +793,7 @@ def call_your_multi_agent_system(request_with_date: str) -> str:
         return asyncio.run(run_async())
     except Exception as e:
         print(f"Agent Execution Error: {e}")
-        return f"Error processing request: {e}"
+        return "We're experiencing a temporary issue processing this request; please resubmit shortly."
 
 
 def run_test_scenarios():
